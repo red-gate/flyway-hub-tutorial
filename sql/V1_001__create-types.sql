@@ -4,6 +4,7 @@ CREATE TYPE public.mpaa_rating AS ENUM (
     'PG-13',
     'R',
     'NC-17'
+    BROKEN RUBBISH
 );
 
 CREATE DOMAIN public.year AS integer
