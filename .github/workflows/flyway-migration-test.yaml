@@ -1,0 +1,33 @@
+# This workflow uses Flyway Hub to test the Flyway database migrations in the 'sql' directory.
+#
+# The workflow will run automatically against all pull requests that modify files under 'sql'.
+#
+# It will also run on all pushes to 'main' that modify files under 'sql'.
+#
+# In order to use this workflow you will need to create a Github Actions secret called
+# FLYWAY_HUB_ACCESS_TOKEN containing a valid Flyway Hub API access token.
+#
+name: Database Migration Tests with Flyway
+
+on:
+  push:
+    branches:
+    - 'main'
+    paths:
+    - 'sql/**'
+  pull_request:
+    paths:
+    - 'sql/**'
+  workflow_dispatch: {}
+
+jobs:
+  test-migrations:
+    name: Test flyway migration scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test migrations on Flyway Hub
+        uses: red-gate/flyway-hub-migration-test@v1
+        with:
+          projectId: 18
+env:
+  FLYWAY_HUB_ACCESS_TOKEN: ${{ secrets.FLYWAY_HUB_ACCESS_TOKEN }}
